@@ -1,8 +1,32 @@
-var basemap = new L.TileLayer(baseUrl, {minZoom:3, maxZoom: 4, attribution: baseAttribution, subdomains: subdomains, opacity: opacity, noWrap: true});
+    /*Задаём размеры карты*/
+      var width = 2197;
+      var height = 618;
+    /*Задаём максимвльный и минимальный зум*/
+      var maxLevel = 4;
+      var minLevel = 3;
+      var orgLevel = 4;
+    /*Рассчитываем координаты для границ и начального положения карты при открытии*/
+      var tileWidth = 256 * Math.pow(2, orgLevel);
+      var radius = tileWidth / 2 / Math.PI;
+      var rx = width - tileWidth / 2;
+      var ry = -height + tileWidth / 2;
+      var west = -180;
+      var east = (180 / Math.PI) * (rx / radius);
+      var north = 85.05;
+      var south = (360 / Math.PI) * (Math.atan(Math.exp(ry / radius)) - (Math.PI / 4));
+      var rc = (tileWidth / 2 + ry) / 2;
+    /*Координаты используются для указания центра карты*/
+      var centerLat = (360 / Math.PI) * (Math.atan(Math.exp(rc / radius)) - (Math.PI / 4));
+      var centerLon = (west + east) / 2;
+      
+      var bounds = [[south, west], [north, east]]; //границы
 
-var center = new L.LatLng(0, 0);
 
-var map = new L.Map('map', {center: center, zoom: 2, maxZoom: maxZoom, layers: [basemap]});
+var basemap = new L.TileLayer(baseUrl, {minZoom: minLevel, maxZoom: maxLevel, attribution: baseAttribution, subdomains: subdomains, opacity: opacity, noWrap: true});
+
+var center = new L.LatLng(centerLat, centerLon); //центр карты
+
+var map = new L.Map('map', {center: center, zoom: 2, maxZoom: maxLevel, layers: [basemap]});
 
 var popupOpts = {
     autoPanPadding: new L.Point(5, 50),
