@@ -22,7 +22,8 @@
       var bounds = [[south, west], [north, east]]; //границы
 
 
-var basemap = new L.TileLayer(baseUrl, {minZoom: minLevel, maxZoom: maxLevel, attribution: baseAttribution, subdomains: subdomains, opacity: opacity, noWrap: true});
+var basemap = new L.TileLayer(baseUrl, {minZoom: minLevel, maxZoom: maxLevel, attribution: baseAttribution, 
+subdomains: subdomains, opacity: opacity, bounds:bounds, noWrap: true});
 
 var center = new L.LatLng(centerLat, centerLon); //центр карты
 
