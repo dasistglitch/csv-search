@@ -3,7 +3,7 @@
       var height = 618;
     /*Задаём максимвльный и минимальный зум*/
       var maxLevel = 4;
-      var minLevel = 3;
+      var minLevel = 1;
       var orgLevel = 4;
     /*Рассчитываем координаты для границ и начального положения карты при открытии*/
       var tileWidth = 256 * Math.pow(2, orgLevel);
@@ -22,7 +22,8 @@
       var bounds = [[south, west], [north, east]]; //границы
 
 
-var basemap = new L.TileLayer(baseUrl, {minZoom: minLevel, maxZoom: maxLevel, attribution: baseAttribution, subdomains: subdomains, opacity: opacity, noWrap: true});
+var basemap = new L.TileLayer(baseUrl, {minZoom: minLevel, maxZoom: maxLevel, attribution: baseAttribution, 
+    subdomains: subdomains, opacity: opacity, bounds: bounds, noWrap: true});
 
 var center = new L.LatLng(centerLat, centerLon); //центр карты
 
@@ -48,7 +49,12 @@ var points = L.geoCsv (null, {
                 attr = '<a target="_blank" href="' + attr + '">'+ attr + '</a>';
             }
             if (attr) {
-                popup += '<tr><th>'+title+'</th><td>'+ attr +'</td></tr>';
+                if (title == 'Фото') {
+                popup += '<tr><th>'+title+'</th><td>'+ '<img src="photos/'+ attr +'.png">' +'</td></tr>';
+            } else
+                if (attr) {
+                    popup += '<tr><th>'+title+'</th><td>'+ attr +'</td></tr>'; 
+                }
             }
         }
         popup += "</table></popup-content>";
@@ -173,6 +179,7 @@ $(document).ready( function() {
         evt.preventDefault();
         $("#filter-string").val("").focus();
         addCsvMarkers();
+        
     });
 
 });
