@@ -3,7 +3,7 @@
       var height = 618;
     /*Задаём максимвльный и минимальный зум*/
       var maxLevel = 4;
-      var minLevel = 1;
+      var minLevel = 3;
       var orgLevel = 4;
     /*Рассчитываем координаты для границ и начального положения карты при открытии*/
       var tileWidth = 256 * Math.pow(2, orgLevel);
@@ -28,6 +28,7 @@ var basemap = new L.TileLayer(baseUrl, {minZoom: minLevel, maxZoom: maxLevel, at
 var center = new L.LatLng(centerLat, centerLon); //центр карты
 
 var map = new L.Map('map', {center: center, zoom: 2, maxZoom: maxLevel, layers: [basemap]});
+map.dragging.disable(); //click and dragging on map
 
 var popupOpts = {
     autoPanPadding: new L.Point(5, 50),
